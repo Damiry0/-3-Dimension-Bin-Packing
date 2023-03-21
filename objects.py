@@ -1,3 +1,6 @@
+from itertools import permutations
+
+
 class Box:
     def __init__(self, width: int, height: int, depth: int, *args, **kwargs) -> None:
 
@@ -12,6 +15,7 @@ class Box:
         self.depth = depth
         self.volume = width * height * depth
         self.coordinates = {'x': 0, 'y': 0, 'z': 0}
+        self.default_coordinates = self.coordinates
 
     def assign_coordinates(self, x: int, y: int, z: int):
         self.coordinates["x"] = x
@@ -19,8 +23,12 @@ class Box:
         self.coordinates["z"] = z
         return self.coordinates
 
-    def rotate(self):
-        raise NotImplemented
+    def rotate(self, configuration: int) -> None:
+        try:
+            perm = permutations([self.width, self.height, self.depth])
+            self.assign_coordinates(perm[configuration])
+        except ValueError:
+            raise 'Cannot rotate object for selected configuration'
 
 
 class Container(Box):
