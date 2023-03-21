@@ -19,6 +19,9 @@ class Box:
         self.coordinates["z"] = z
         return self.coordinates
 
+    def rotate(self):
+        raise NotImplemented
+
 
 class Container(Box):
     def __init__(self, width: int, height: int, depth: int, *args, **kwargs) -> None:
@@ -41,14 +44,28 @@ class Container(Box):
             self.remaining_volume = self.calculate_remaining_volume()
         return self.remaining_volume
 
+    def add_box_at_coordinates(self, box: Box,
+                               pivot) -> int:  # Python doesn't support function overloading dogshit language
+        raise NotImplementedError
+
     def check_coordinates_in_container(self, box: Box) -> bool:
-        if box.coordinates["x"] < self.coordinates["x"] or box.coordinates["x"] + box.width > self.coordinates["x"] + self.width:
+        if box.coordinates["x"] < self.coordinates["x"] or box.coordinates["x"] + box.width > self.coordinates[
+            "x"] + self.width:
             return False
-        if box.coordinates["y"] < self.coordinates["y"] or box.coordinates["y"] + box.height > self.coordinates["y"] + self.height:
+        if box.coordinates["y"] < self.coordinates["y"] or box.coordinates["y"] + box.height > self.coordinates[
+            "y"] + self.height:
             return False
-        if box.coordinates["z"] < self.coordinates["z"] or box.coordinates["z"] + box.depth > self.coordinates["z"] + self.depth:
+        if box.coordinates["z"] < self.coordinates["z"] or box.coordinates["z"] + box.depth > self.coordinates[
+            "z"] + self.depth:
             return False
         return True
+
+    def check_fit_in_selected_position(self, box: Box, position) -> bool:
+        raise NotImplementedError
+
+    def check_fit_in_default_position(self, box: Box) -> bool:
+        # Should check if box is able to fit in (0,0,0) coordinatess
+        raise NotImplementedError
 
     def check_box_collision(self: Box, checked_box: Box) -> bool:
         if self.coordinates["x"] < checked_box.coordinates["x"] < checked_box.coordinates["x"] + checked_box.width:
