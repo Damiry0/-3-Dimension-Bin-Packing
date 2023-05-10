@@ -16,8 +16,49 @@
 # dimension, the biggest dimension will be chosen
 # 3. Place layers in box
 # 4. Check for remaining space
+import numpy
+
+from box import Box
+from container import Container
+from csv import reader
+from itertools import groupby
 
 
+def load_data():
+    dataset = list()
+    box_list = []
+    with open('data.csv', 'r') as file:
+        csv_reader = reader(file)
+        for row in csv_reader:
+            if not row:
+                continue
+            dataset.append(row)
+    for row in dataset:
+        for _ in range(len(row)):
+            row[_] = int(float(row[_]))
+        row.sort(reverse=True)
+        box_list.append(Box(row[0], row[1], row[2]))
+    return box_list
 
 
+class LayerBuilder:
 
+    def __init__(self):
+        self.data: list[Box] = load_data()
+        self.groups = self.group_boxes()
+
+    def group_boxes(self):
+        groups = []
+        self.data = sorted(self.data, key=lambda box: box.height, reverse=True)
+        values = sorted(set(map(lambda box: box.height, self.data)), reverse=True)
+        cp = self.data
+        for _ in range(len(values)):
+            groups.append([])
+        for _ in range(len(values)):
+            for box in cp:
+                if box.height == values[_]:
+                    groups[_].append(box)
+        return groups
+
+
+MyLayer = LayerBuilder()

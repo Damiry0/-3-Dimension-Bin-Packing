@@ -2,9 +2,9 @@ from itertools import permutations
 
 
 class Box:
-    def __init__(self, width: int, height: int, depth: int, *args, **kwargs) -> None:
+    def __init__(self, height: int, width: int, depth: int, *args, **kwargs) -> None:
 
-        for obj in (width, height, depth):
+        for obj in (height, width, depth):
             if type(obj) is not int:
                 raise TypeError('Parameters should be of type int and is of type', type(obj))
             if obj <= 0:
@@ -16,6 +16,11 @@ class Box:
         self.volume = width * height * depth
         self.coordinates = {'x': 0, 'y': 0, 'z': 0}
         self.default_coordinates = self.coordinates
+
+    @staticmethod
+    def swap_dimensions(dim_1, dim_2):
+        dim_1, dim_2 = dim_2, dim_1
+        return dim_1, dim_2
 
     def assign_coordinates(self, x: int, y: int, z: int):
         self.coordinates["x"] = x
