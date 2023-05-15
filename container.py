@@ -21,10 +21,7 @@ class Container(Box):
             self.packed.append(box)
             self.remaining_volume = self.calculate_remaining_volume()
         return self.remaining_volume
-
-    def add_box_at_coordinates(self, box: Box,
-                               pivot) -> int:  # Python doesn't support function overloading dogshit language
-        raise NotImplementedError
+    
 
     def check_coordinates_in_container(self, box: Box) -> bool:
         if box.coordinates["x"] < self.coordinates["x"] or box.coordinates["x"] + box.width > self.coordinates[
@@ -37,6 +34,61 @@ class Container(Box):
             "z"] + self.depth:
             return False
         return True
+    
+    def check_box_to_box(self, packed_box: Box, new_box: Box) -> bool:
+        #x axis 
+        if new_box.coordinates["x"] < packed_box.coordinates["x"]:
+            if new_box.coordinates["x"] + new_box.width > packed_box.coordinates["x"]:
+                return False
+        if new_box.coordinates["x"] > packed_box.coordinates["x"]:
+            if new_box.coordinates["x"] < packed_box.coordinates["x"] + packed_box.width:
+                return False
+        #y axis
+        if new_box.coordinates["y"] < packed_box.coordinates["y"]:
+            if new_box.coordinates["y"] + new_box.height > packed_box.coordinates["y"]:
+                return False
+        if new_box.coordinates["y"] > packed_box.coordinates["y"]:
+            if new_box.coordinates["y"] < packed_box.coordinates["y"] + packed_box.height:
+                return False
+        #z axis
+        if new_box.coordinates["z"] < packed_box.coordinates["z"]:
+            if new_box.coordinates["z"] + new_box.depth > packed_box.coordinates["z"]:
+                return False
+        if new_box.coordinates["z"] > packed_box.coordinates["z"]:
+          if new_box.coordinates["z"] < packed_box.coordinates["z"] + packed_box.depth:
+                return False
+        #the same coordinates:
+        if new_box.coordinates == packed_box.coordinates:
+            return False
+        return True
+
+    def check_fit_with_others_boxes(self, box: Box) -> bool:
+        for packed_box in self.packed:
+            #print(packed_box)
+            if not self.check_box_to_box(packed_box, box):
+                return False
+        return True
+    
+    def check_box_in_container_and_with_others(self, box: Box)-> bool:
+        if box.volume > self.remaining_volume:
+            print("Element too large to fit into container")
+            return False
+        if not self.check_coordinates_in_container(box):
+            print("Element is outside the container")
+            return False
+        if not self.check_fit_with_others_boxes(box):
+            print("Element collides with others")
+            return False
+        return True
+               
+
+    def add_box_at_coordinates(self, box: Box,
+                               coordinates: object) -> int:  # Python doesn't support function overloading dogshit language
+        box.coordinates = coordinates
+        self.packed.append(box)
+        self.remaining_volume = self.calculate_remaining_volume()
+        return self.remaining_volume
+    
 
     def check_fit_in_selected_position(self, box: Box, position) -> bool:
         raise NotImplementedError
