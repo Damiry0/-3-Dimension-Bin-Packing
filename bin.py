@@ -5,13 +5,14 @@ from box import Box
 class Bin:
     _volume = 0
 
-    def __init__(self, name, width, height, depth):
+    def __init__(self, name, width, height, depth, allowed_rots):
         self.name = name
         self.width = width
         self.height = height
         self.depth = depth
         self.packed_items = []
         self.unpacked_items = []
+        self.allowed_rots = allowed_rots
 
     @property
     def volume(self) -> int:
@@ -19,14 +20,26 @@ class Bin:
         return self._volume
 
     def toString(self) -> str:
-        return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume}'
+        return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume} ' \
+               f'packed items volume:{self.packed_volume()} remaining_volume:{self.remaining_volume()}%'
+
+    def remaining_volume(self):
+        sum_vol = self.packed_volume()
+        rem_vol = float(float(self.volume - sum_vol)/self.volume) * 100
+        return rem_vol
+
+    def packed_volume(self):
+        sum_vol = 0
+        for item in self.packed_items:
+            sum_vol = sum_vol + item.volume
+        return sum_vol
 
     def place_box_in_bin(self, box: Box, pivot) -> bool:
         can_pack = False
         valid_item_position = box.position
         box.position = pivot
 
-        for rotation in range(0, 6):
+        for rotation in self.allowed_rots:
             box.rotation_type = rotation
             dimension = box.get_packing_configuration()
             if (self.width < pivot[0] + dimension[0] or self.height < pivot[1] + dimension[1]

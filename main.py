@@ -18,7 +18,6 @@ def box_collision(box1, box2):
             check_rect_collision(box1, box2, 1, 2) and
             check_rect_collision(box1, box2, 0, 2))
 
-# Tests below
 
 
 
