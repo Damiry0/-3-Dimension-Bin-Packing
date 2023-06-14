@@ -1,36 +1,38 @@
-from itertools import permutations
-
 
 class Box:
-    def __init__(self, height: int, width: int, depth: int, *args, **kwargs) -> None:
+    _volume = 0
+    _packing_configuration = None
 
-        for obj in (height, width, depth):
-            if type(obj) is not int:
-                raise TypeError('Parameters should be of type int and is of type', type(obj))
-            if obj <= 0:
-                raise ValueError('Parameters should be greater than 0')
-
+    def __init__(self, name, width, height, depth):
+        self.name = name
         self.width = width
         self.height = height
         self.depth = depth
-        self.volume = width * height * depth
-        self.coordinates = {'x': 0, 'y': 0, 'z': 0}
-        self.default_coordinates = self.coordinates
+        self.rotation_type = 0
+        self.position = [0, 0, 0]
 
-    @staticmethod
-    def swap_dimensions(dim_1, dim_2):
-        dim_1, dim_2 = dim_2, dim_1
-        return dim_1, dim_2
+    @property
+    def volume(self) -> int:
+        self._volume = self.width * self.depth * self.height
+        return self._volume
 
-    def assign_coordinates(self, x: int, y: int, z: int):
-        self.coordinates["x"] = x
-        self.coordinates["y"] = y
-        self.coordinates["z"] = z
-        return self.coordinates
+    def toString(self) -> str:
+        return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume}'
 
-    def rotate(self, configuration: int) -> None:
-        try:
-            perm = permutations([self.width, self.height, self.depth])
-            self.assign_coordinates(perm[configuration])
-        except ValueError:
-            raise 'Cannot rotate object for selected configuration'
+    def get_packing_configuration(self) -> list:
+        if self.rotation_type == 0:
+            self._packing_configuration = [self.width, self.height, self.depth]
+        elif self.rotation_type == 1:
+            self._packing_configuration = [self.height, self.width, self.depth]
+        elif self.rotation_type == 2:
+            self._packing_configuration = [self.height, self.depth, self.width]
+        elif self.rotation_type == 3:
+            self._packing_configuration = [self.depth, self.height, self.width]
+        elif self.rotation_type == 4:
+            self._packing_configuration = [self.depth, self.width, self.height]
+        elif self.rotation_type == 5:
+            self._packing_configuration = [self.width, self.depth, self.height]
+        else:
+            self._packing_configuration = []
+
+        return self._packing_configuration
