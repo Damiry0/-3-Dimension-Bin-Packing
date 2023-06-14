@@ -25,7 +25,8 @@ class Bin:
         return ((float(sum)/self.volume)*100)
 
     def toString(self) -> str:
-        return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume} used: {round(self.used(),1)}%'
+        # return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume} used: {round(self.used(),1)}%'
+        return f'{self.name} packed items: {len(self.packed_items)} used: {round(self.used(),1)}%'
 
     def place_box_in_bin(self, box: Box, pivot) -> bool:
         can_pack = False

@@ -5,36 +5,46 @@ from box import Box
 
 packer = Packer()
 
-packer.add_bin(Bin('small-envelope', 12, 6, 1))
-packer.add_bin(Bin('large-envelope', 15, 12, 1))
-packer.add_bin(Bin('small-box', 9, 5, 2))
-packer.add_bin(Bin('medium-box', 11, 9, 6))
-packer.add_bin(Bin('medium-2-box', 14, 12, 3))
-packer.add_bin(Bin('large-box', 12, 12, 6))
-packer.add_bin(Bin('large-2-box', 24, 12, 3))
+for i in range(10):
+    packer.add_bin(Bin(f'20-standard [bin {i}]', 234, 240, 589))
+# packer.add_bin(Bin('large-envelope', 15, 12, 5))
 
-packer.add_item(Box('50g [powder 1]', 4, 2, 2))
-packer.add_item(Box('50g [powder 2]', 4, 2, 2))
-packer.add_item(Box('50g [powder 3]', 4, 2, 2))
-packer.add_item(Box('250g [powder 4]', 8, 4, 2))
-packer.add_item(Box('250g [powder 5]', 8, 4, 2))
-packer.add_item(Box('250g [powder 6]', 8, 4, 2))
-packer.add_item(Box('250g [powder 7]', 8, 4, 2))
-packer.add_item(Box('250g [powder 8]', 8, 4, 2))
-packer.add_item(Box('250g [powder 9]', 8, 4, 2))
+def generate_items(nb_of_S = 0, nb_of_m = 0, nb_of_L = 0, nb_of_XL = 0, nb_of_T8=0, nb_of_T10=0):
+    index = 1
+    for i in range(nb_of_S):
+        packer.add_item(Box(f'50g [powder {index}]', 20, 11, 11))
+        index += 1
+    for i in range(nb_of_m):
+        packer.add_item(Box(f'250g [powder {index}]', 30, 20, 25))
+        index += 1
+    for i in range(nb_of_L):
+        packer.add_item(Box(f'250g [powder {index}]', 53, 23, 32))
+        index += 1
+    for i in range(nb_of_XL):
+        packer.add_item(Box(f'250g [powder {index}]', 70, 32, 40))
+        index += 1
+    for i in range(nb_of_T8):
+        packer.add_item(Box(f'250g [powder {index}]', 40, 6, 29))
+        index += 1
+    for i in range(nb_of_T10):
+        packer.add_item(Box(f'250g [powder {index}]', 30, 60, 30))
+        index += 1
 
-packer.pack()
+
+generate_items(nb_of_50g=5,nb_of_250g=5)
+packer.pack(distribute_items=True)
 
 for b in packer.bins_to_pack:
-    print(":::::::::::", b.toString())
+    if len(b.packed_items)>0:
+        print(":::::::::::", b.toString())
 
-    print("FITTED ITEMS:")
-    for item in b.packed_items:
-        print("====> ", item.toString())
+        print("FITTED ITEMS:")
+        for item in b.packed_items:
+            print("====> ", item.toString())
 
-    print("UNFITTED ITEMS:")
-    for item in b.unpacked_items:
-        print("====> ", item.toString())
+        print("UNFITTED ITEMS:")
+        for item in b.unpacked_items:
+            print("====> ", item.toString())
 
-    print("***************************************************")
-    print("***************************************************")
+        print("***************************************************")
+        print("***************************************************")
