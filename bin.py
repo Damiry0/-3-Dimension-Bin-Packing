@@ -1,4 +1,4 @@
-from main import box_collision
+from box_collision import box_collision
 from box import Box
 
 
@@ -7,9 +7,12 @@ class Bin:
 
     def __init__(self, name, width, height, depth, allowed_rots):
         self.name = name
-        self.width = width
-        self.height = height
-        self.depth = depth
+
+        dims = [width, height, depth]
+        dims.sort()
+        self.width = dims[-1]
+        self.height = dims[-2]
+        self.depth = dims[-3]
         self.packed_items = []
         self.unpacked_items = []
         self.allowed_rots = allowed_rots
@@ -36,7 +39,7 @@ class Bin:
 
     def place_box_in_bin(self, box: Box, pivot) -> bool:
         can_pack = False
-        valid_item_position = box.position
+        temp_box_position = box.position
         box.position = pivot
 
         for rotation in self.allowed_rots:
@@ -57,11 +60,11 @@ class Bin:
                 self.packed_items.append(box)
 
             if not can_pack:
-                box.position = valid_item_position
+                box.position = temp_box_position
 
             return can_pack
 
         if not can_pack:
-            box.position = valid_item_position
+            box.position = temp_box_position
 
         return can_pack
