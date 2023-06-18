@@ -28,7 +28,7 @@ var boxes = new List<Box>();
 for (var i = 0; i < 150; i++)
     boxes.Add(new Box(random.Next(1, 10), random.Next(1, 10), random.Next(1, 10), new Tuple<int, int, int>(0, 0, 0)));
 
-var container = new Container(30, 30, 30, new Tuple<int, int, int>(0, 0, 0));
+var container = new Container(30, 30, 30);
 
 var chromosome = new Chromosome(boxes, container);
 var population = new Population(50, 100, chromosome);
@@ -46,7 +46,7 @@ var latestResult = new List<Box>();
 var stopwatch = new Stopwatch();
 stopwatch.Start();
 
-ga.GenerationRan += (sender, e) =>
+ga.GenerationRan += (_, _) =>
 {
     var bestChromosome = ga.BestChromosome as Chromosome;
     var bestFitness = bestChromosome.Fitness.Value;

@@ -2,31 +2,20 @@ using GeneticSharp;
 
 namespace GeneticSolution;
 
-public enum Rotations
-{
-    LWH = 0,
-    WLH = 1,
-    LHW = 2,
-    HLW = 3,
-    HWL = 4,
-    WHL = 5
-}
-
 public class Fitness : IFitness
 {
     public double Evaluate(IChromosome chromosome)
     {
-        var values = chromosome as Chromosome;
+        var chromosomeInstance = chromosome as Chromosome;
         var results = new List<Box>();
 
-        var boxes = values._boxes;
-        var container = values._container;
+        var boxes = chromosomeInstance._boxes;
+        var container = chromosomeInstance._container;
 
         var dblf = new List<DBLF>();
         dblf.Add(new DBLF(new Point(0, 0, 0), new Point(container.width, container.height, container.depth)));
 
         var spaceUsed = 0;
-        //var sortedBoxes = boxes.OrderBy(x => x.Length).ThenBy(x => x.Height).ThenBy(x => x.Width).ToList();
 
         foreach (var box in boxes)
         foreach (Rotations roration in Enum.GetValues(typeof(Rotations)))
@@ -71,36 +60,8 @@ public class Fitness : IFitness
             }
         }
 
-        values.SetResult(results);
+        chromosomeInstance.SetResult(results);
 
         return spaceUsed / (double)container.Volume * 100;
     }
-}
-
-public class DBLF
-{
-    public DBLF(Point currentPosition, Point possiblePosition)
-    {
-        CurrentPosition = currentPosition;
-        PossiblePosition = possiblePosition;
-    }
-
-    public Point CurrentPosition { get; set; }
-    public Point PossiblePosition { get; set; }
-}
-
-public class Point
-{
-    public Point(int x, int y, int z)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-    }
-
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int Z { get; set; }
-
-    public int Volume => X * Y * Z;
 }

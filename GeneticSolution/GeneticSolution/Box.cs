@@ -2,21 +2,17 @@ namespace GeneticSolution;
 
 public class Box
 {
-    public Tuple<int, int, int>? PotentialCoordinates;
-
-    public Box(int width, int height, int length, Tuple<int, int, int> coordinates,
-        Tuple<int, int, int>? potentialCoordinates = null)
+    public Box(int width, int height, int length, Tuple<int, int, int> coordinates)
     {
         Width = width;
         Height = height;
         Length = length;
         Coordinates = coordinates;
-        PotentialCoordinates = potentialCoordinates;
     }
 
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int Length { get; set; }
+    public int Width { get; }
+    public int Height { get; }
+    public int Length { get; }
 
     public int Volume => Width * Height * Length;
 
