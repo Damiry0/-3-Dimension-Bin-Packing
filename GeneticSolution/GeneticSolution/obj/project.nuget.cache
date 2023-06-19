@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tdAHjegjOwKJIIGZQdVefy+cgHuPf69++156HYJsQ6lJYORcZXlPZ2Q3/ESPRavAmmHv+CzY5BW6yi7rgrTvFw==",
+  "dgSpecHash": "kZmmfNDN+ZSY1/wJHYOFdF9Fcotu/M4ehRgcAAu3G16JCUlYkn3zPwpa/O+B9yT5r0FXrwINClqgdLalZvgBOQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\GeneticSolution.csproj",
+  "projectFilePath": "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\GeneticSolution.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Damiry\\.nuget\\packages\\geneticsharp\\3.1.4\\geneticsharp.3.1.4.nupkg.sha512"
   ],

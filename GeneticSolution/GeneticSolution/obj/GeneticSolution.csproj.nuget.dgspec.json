@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\GeneticSolution.csproj": {}
+    "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\GeneticSolution.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\GeneticSolution.csproj": {
+    "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\GeneticSolution.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\GeneticSolution.csproj",
+        "projectUniqueName": "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\GeneticSolution.csproj",
         "projectName": "GeneticSolution",
-        "projectPath": "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\GeneticSolution.csproj",
+        "projectPath": "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\GeneticSolution.csproj",
         "packagesPath": "C:\\Users\\Damiry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Damiry\\RiderProjects\\Smutny\\GeneticSolution\\obj\\",
+        "outputPath": "C:\\Users\\Damiry\\Documents\\GitHub\\3-Dimension-Bin-Packing\\GeneticSolution\\GeneticSolution\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Damiry\\AppData\\Roaming\\NuGet\\NuGet.Config",
