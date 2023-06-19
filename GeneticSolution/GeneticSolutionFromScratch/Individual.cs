@@ -1,43 +1,34 @@
-namespace GeneticSolutionFromScratch;
+using GeneticSolutionFromScratch;
 
-public class Individual
+public class Individual : IComparable<Individual>
 {
-    private static readonly Random random = new();
+    public readonly List<Box> _boxes = new();
+    public readonly Container _container;
+    public List<Box> _result = new();
 
-    public Individual(int geneLength)
+    public Individual(List<Box> boxes, Container container)
     {
-        Gene = GenerateRandomGene(geneLength);
+        boxes.Shuffle();
+        _boxes = boxes;
+        _container = container;
     }
 
-    public string Gene { get; private set; }
     public double Fitness { get; private set; }
 
-    public void CalculateFitness(string targetGene)
+    public int CompareTo(Individual other)
     {
-        var matchingGenes = Gene.Zip(targetGene, (a, b) => a == b ? 1 : 0).Sum();
-        Fitness = (double)matchingGenes / targetGene.Length;
+        // Compare individuals based on their fitness (lower fitness is better)
+        return Fitness.CompareTo(other.Fitness);
     }
 
-    public Individual Crossover(Individual partner)
+    public void SetResult(List<Box> boxes)
     {
-        var crossoverPoint = random.Next(0, Gene.Length);
-        var childGene = Gene.Substring(0, crossoverPoint) + partner.Gene.Substring(crossoverPoint);
-        return new Individual(childGene.Length) { Gene = childGene };
+        _result = boxes;
     }
 
-    public void Mutate(double mutationRate)
+    public void CalculateFitness()
     {
-        var geneArray = Gene.ToCharArray();
-        for (var i = 0; i < geneArray.Length; i++)
-            if (random.NextDouble() < mutationRate)
-                geneArray[i] = geneArray[i] == '0' ? '1' : '0';
-        Gene = new string(geneArray);
-    }
-
-    private string GenerateRandomGene(int geneLength)
-    {
-        var geneArray = new char[geneLength];
-        for (var i = 0; i < geneLength; i++) geneArray[i] = random.Next(2) == 0 ? '0' : '1';
-        return new string(geneArray);
+        var fitness = new Fitness().Evaluate(this);
+        Fitness = fitness;
     }
 }

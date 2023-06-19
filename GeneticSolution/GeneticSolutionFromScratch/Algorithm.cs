@@ -1,10 +1,10 @@
 namespace GeneticSolutionFromScratch;
 
-public class Fitness : IFitness
+public class Fitness
 {
-    public double Evaluate(IChromosome chromosome)
+    public double Evaluate(Individual chromosome)
     {
-        var chromosomeInstance = chromosome as Chromosome;
+        var chromosomeInstance = chromosome;
         var results = new List<Box>();
 
         var boxes = chromosomeInstance._boxes;
