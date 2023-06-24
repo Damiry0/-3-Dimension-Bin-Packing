@@ -5,9 +5,8 @@ from box import Box
 class Bin:
     _volume = 0
 
-    def __init__(self, name, width, height, depth, allowed_rots):
+    def __init__(self, name, width, height, depth):
         self.name = name
-
         dims = [width, height, depth]
         dims.sort()
         self.width = dims[-1]
@@ -15,16 +14,15 @@ class Bin:
         self.depth = dims[-3]
         self.packed_items = []
         self.unpacked_items = []
-        self.allowed_rots = allowed_rots
 
     @property
     def volume(self) -> int:
         self._volume = self.width * self.depth * self.height
         return self._volume
 
-    def toString(self) -> str:
+    def print(self) -> str:
         return f'{self.name} width:{self.width} height:{self.height} depth:{self.depth} volume:{self.volume} ' \
-               f'packed items volume:{self.packed_volume()} remaining_volume:{self.remaining_volume()}%'
+               f'packed items volume:{self.packed_volume()} packed_volume:{100 - self.remaining_volume()}%'
 
     def remaining_volume(self):
         sum_vol = self.packed_volume()
@@ -42,7 +40,7 @@ class Bin:
         temp_box_position = box.position
         box.position = pivot
 
-        for rotation in self.allowed_rots:
+        for rotation in range(0, 6):
             box.rotation_type = rotation
             dimension = box.get_packing_configuration()
             if (self.width < pivot[0] + dimension[0] or self.height < pivot[1] + dimension[1]

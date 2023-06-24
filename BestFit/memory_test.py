@@ -1,6 +1,6 @@
 from packing_algorithm import Packer
-from bin import Bin
-from box import Box
+from BestFit.bin import Bin
+from BestFit.box import Box
 import tracemalloc
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,7 +21,7 @@ for num_items in x:
     for i in range(0, num_items):
         packer_1.add_item(Box('Box', 3, 3, 3))
 
-    packer_1.pack(distribute_items=True)
+    packer_1.BestFitAlgorithm()
     memory_usage.append(max(tracemalloc.get_traced_memory()))
 
     print(max(tracemalloc.get_traced_memory()))
