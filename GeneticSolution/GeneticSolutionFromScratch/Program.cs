@@ -1,15 +1,28 @@
 ﻿using System.Diagnostics;
 using GeneticSolutionFromScratch;
 
+Console.WriteLine("Hybrid Genetic Algorithm from scratch");
+Console.WriteLine("========================");
+Console.WriteLine("Number of generated boxes:");
+var numberOfBoxes = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Dimensions of Container:");
+var tokens = Console.ReadLine().Split();
+var x = int.Parse(tokens[0]);
+var y = int.Parse(tokens[1]);
+var z = int.Parse(tokens[2]);
+Console.WriteLine("Number of generations:");
+var generations = Convert.ToInt32(Console.ReadLine());
+
+
 var populationSize = 50; // Size of the population
 var maxGenerations = 30; // Maximum number of generations
 var random = new Random();
 
 var boxes = new List<Box>();
-for (var i = 0; i < 150; i++)
+for (var i = 0; i < numberOfBoxes; i++)
     boxes.Add(new Box(random.Next(1, 10), random.Next(1, 10), random.Next(1, 10), new Tuple<int, int, int>(0, 0, 0)));
 
-var container = new Container(30, 30, 30);
+var container = new Container(x, y, z);
 
 var population = InitializePopulation(populationSize, boxes, container);
 
@@ -23,7 +36,7 @@ var bestFitness = -1.0;
 var bestResult = new List<Box>();
 
 
-for (var generation = 1; generation <= maxGenerations; generation++)
+for (var generation = 1; generation <= generations; generation++)
 {
     EvaluatePopulation(population);
 
